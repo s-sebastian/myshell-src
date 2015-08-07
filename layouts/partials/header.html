@@ -77,7 +77,11 @@
         <header id="header">
             <a id="logo" href="{{ .Site.BaseURL }}"><img src="https://secure.gravatar.com/avatar/f99831299d4cb5db7eee406d4176d290.jpg?size=200" alt="{{ .Site.Title }}" /></a>
             <h1><a href="{{.Site.BaseURL}}">{{.Site.Title}}</a></h1>
-            <p>{{.Description}}</p>
+            {{ if .Description }}
+            <p>{{ .Description }}</p>
+            {{ else }}
+            <p>{{ .Site.Params.description }}</p>
+            {{ end }}
 
             {{ partial "follow.html" . }}
             {{ partial "navigation.html" . }}
