@@ -66,8 +66,4 @@ You can check an average memory usage by single PHP-FPM process with this handy 
 
     ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'
 
-If this is a dedicated web server and assuming you are devoting 80% of available memory to PHP-FPM, the command below will suggest an approx **pm.max_children** value for all pools:
-
-    echo "pm.max_children = $(( $(awk '/MemTotal:/ { printf "%d\n", ($2*0.80) }' /proc/meminfo) / $(ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d\n", sum/NR) }') ))"
-
 You can use the same steps above to calculate the value for **MaxClients** for Apche web server - just substitute the **php-fpm** with **httpd**.
