@@ -79,9 +79,9 @@ or
 
     (config)# same-security-traffic permit intra-interface
 
-\- enable jambo frames on specific interface:
+\- enable jumbo frames on specific interface:
 
-    (config-if)# jambo-frame reservation
+    (config-if)# jumbo-frame reservation
 
 \- configure VLAN:
 
