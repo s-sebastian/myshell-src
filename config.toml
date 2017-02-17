@@ -1,4 +1,4 @@
-baseurl = "http://myshell.co.uk/"
+baseurl = "https://myshell.co.uk/"
 config = "config.toml"
 languageCode = "en-gb"
 MetaDataFormat = "toml"
