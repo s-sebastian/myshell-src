@@ -1,7 +1,7 @@
 +++
 categories = ["Quick Tips"]
 date = "2012-07-17T15:51:00+01:00"
-description = ""
+description = "How to determine the number of physical CPUs on Linux"
 tags = ["/proc/cpuinfo"]
 type = "post"
 title = "How to determine the number of physical CPUs on Linux"

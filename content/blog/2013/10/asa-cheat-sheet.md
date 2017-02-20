@@ -1,7 +1,7 @@
 +++
 categories = ["Networking"]
 date = "2013-10-24T21:47:00+01:00"
-description = ""
+description = "Cisco ASA – Cheat Sheet"
 tags = ["asa", "cisco"]
 type = "post"
 title = "Cisco ASA – Cheat Sheet"

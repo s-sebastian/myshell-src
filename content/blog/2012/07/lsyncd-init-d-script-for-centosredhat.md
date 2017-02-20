@@ -1,6 +1,6 @@
 +++
 categories = "Scripts"
-description = ""
+description = "Lsyncd “init.d” script for CentOS/RedHat"
 tags = ["init", "lsyncd"]
 type = "post"
 date = "2012-07-07T11:35:00+01:00"

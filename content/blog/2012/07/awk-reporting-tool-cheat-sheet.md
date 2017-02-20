@@ -1,7 +1,7 @@
 +++
 categories = ["Scripts"]
 date = "2012-07-14T19:02:00+01:00"
-description = ""
+description = "Awk - Reporting Tool - Cheat Sheet"
 tags = ["bash", "awk", "linux"]
 type = "post"
 title = "Awk - Reporting Tool - Cheat Sheet"

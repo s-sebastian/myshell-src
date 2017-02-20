@@ -1,6 +1,6 @@
 +++
 categories = "Scripts"
-description = ""
+description = "Sed - UNIX Stream Editor - Cheat Sheet"
 tags = ["bash", "sed"]
 type = "post"
 date = "2012-07-07T13:11:00+01:00"

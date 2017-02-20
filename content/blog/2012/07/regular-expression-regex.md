@@ -1,7 +1,7 @@
 +++
-categories = ["Sinux"]
+categories = ["Linux"]
 date = "2012-07-27T20:49:00+01:00"
-description = ""
+description = "Regular-Expression (RegEx)"
 tags = ["regex"]
 type = "post"
 title = "Regular-Expression (RegEx)"

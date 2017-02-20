@@ -1,7 +1,7 @@
 +++
 categories = ["Linux"]
 date = "2012-08-26T23:52:35+00:00"
-description = ""
+description = "How-to extend a root LVM partition online"
 tags = ["lvm", "resize2fs"]
 type = "post"
 title = "How-to extend a root LVM partition online"

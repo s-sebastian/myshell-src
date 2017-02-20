@@ -11,6 +11,7 @@ paginate = 20
 
 [params]
   author = "Sebastian"
+  description = "Techie blog"
   ga = true
   disqus = "myshell"
   DateForm = "Mon, Jan 2, 2006"

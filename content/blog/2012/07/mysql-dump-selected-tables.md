@@ -1,7 +1,7 @@
 +++
 categories = ["Database"]
 date = "2012-07-17T17:15:00+01:00"
-description = ""
+description = "MySQL: dump selected tables"
 tags = ["mysql", "mysqldump"]
 type = "post"
 title = "MySQL: dump selected tables"

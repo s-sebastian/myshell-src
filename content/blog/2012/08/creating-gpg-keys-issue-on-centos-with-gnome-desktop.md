@@ -1,7 +1,7 @@
 +++
 categories = ["Linux"]
 date = "2012-08-22T12:41:00+01:00"
-description = ""
+description = "Creating GPG keys issue on CentOS with GNOME Desktop"
 tags = ["gpg", "passphrase", "pinentry"]
 type = "post"
 title = "Creating GPG keys issue on CentOS with GNOME Desktop"

@@ -1,7 +1,7 @@
 +++
 categories = ["Linux"]
 date = "2012-07-12T22:57:00+01:00"
-description = ""
+description = "CentOS/RedHat: Secured phpMyAdmin on Nginx with SSL only"
 tags = ["nginx", "phpmyadmin"]
 type = "post"
 title = "CentOS/RedHat: Secured phpMyAdmin on Nginx with SSL only"
