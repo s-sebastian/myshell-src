@@ -67,7 +67,7 @@ Now, we can find Apache process that is communicating with curl on port from the
 ```
 # lsof -a -c httpd -i TCP:59054
 COMMAND  PID   USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
-httpd   4955 apache    8u  IPv4 1556230695      0t0  TCP web.local:http->web01.local:59054 (ESTABLISHED)
+httpd   4955 apache    8u  IPv4 1556230695      0t0  TCP web01.local:http->web01.local:59054 (ESTABLISHED)
 ```
 
 Time to see what is taking so long:
