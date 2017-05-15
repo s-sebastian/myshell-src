@@ -20,11 +20,9 @@ In order to strace a single Apache process I had to access this site from a web 
 I changed the `User-Agent` header to easily grep through the logs.
 
 ```
-# curl -v -s -o /dev/null -A "DEBUG" -H "Host: exmaple.com"
-http://10.10.0.10:80/
+# curl -v -s -o /dev/null -A "DEBUG" -H "Host: example.com" http://10.10.0.10:80/
 * About to connect() to 10.10.0.10 port 80 (#0)
-*
-Trying 10.10.0.10... connected
+*   Trying 10.10.0.10... connected
 * Connected to 10.10.0.10 (10.10.0.10) port 80 (#0)
 > GET / HTTP/1.1
 > User-Agent: DEBUG
@@ -43,8 +41,7 @@ This was taking to long and after a few minutes we finally got a reply:
 < Cache-Control: no-cache, no-store
 < Expires: -1
 < Pragma: no-cache
-< Set-Cookie:
-cp_session=Xp5xCpbtRVRrZev22rcXkxMk4rIjtc8S6o8ndE8yXlIIVlMzD-nE1HxPmY9KVDBawpzgo%2CH-9o8wVy3%2CLPT5A1; path=/; httponly
+< Set-Cookie: cp_session=Xp5xCpbtRVRrZev22rcXkxMk4rIjtc8S6o8ndE8yXlIIVlMzD-nE1HxPmY9KVDBawpzgo%2CH-9o8wVy3%2CLPT5A1; path=/; httponly
 < Content-Length: 68053
 < Vary: User-Agent,Accept-Encoding
 < Content-Type: text/html; charset=UTF-8
