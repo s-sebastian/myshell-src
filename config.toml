@@ -3,6 +3,7 @@ config = "config.toml"
 languageCode = "en-gb"
 MetaDataFormat = "toml"
 title = "myshell.co.uk"
+enableRobotsTXT = true
 paginate = 20
 #publishdir = ""
 
