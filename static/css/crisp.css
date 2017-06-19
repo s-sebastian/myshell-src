@@ -272,3 +272,24 @@ footer a:hover {
 		margin-left: 2em; 
 	}
 }
+
+/* Custom styles */
+
+.prevnext {
+	padding-top:1em;
+	padding-bottom:1em;
+}
+.prev-post {
+	float:left;
+}
+.next-post {
+	float:right;
+}
+.adsense {
+	max-width:56em;
+	padding-bottom: 1em;
+}
+p > code {
+	font-size:1.2em;
+	word-wrap: break-word;
+}
