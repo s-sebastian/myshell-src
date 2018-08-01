@@ -1,9 +1,9 @@
 +++
 date = "2017-06-19T10:07:18+01:00"
-title = "Python: get IP from HTTP request using the requests module"
+title = "Python: get remote IP from HTTP request using the requests module"
 tags = ["python", "requests"]
 type = "post"
-description = "Python: get IP from HTTP request using the requests module"
+description = "Python: get remote IP from HTTP request using the requests module"
 categories = ["Linux"]
 
 +++
