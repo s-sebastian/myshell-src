@@ -293,3 +293,21 @@ p > code {
 	font-size:1.2em;
 	word-wrap: break-word;
 }
+.message {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	background-color: #2C3E50;
+}
+.inner-message {
+	padding: 5px;
+	margin: 0 auto;
+	color: white;
+	text-align: center;
+	-webkit-text-size-adjust: 100%;
+}
+.inner-message a {
+	color: #18BC9C;
+}
