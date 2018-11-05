@@ -1,6 +1,9 @@
 +++
 categories = ["Linux"]
-description = ""
-type = "post"
+date = "{{ .Date }}"
+title = "{{ replace .Name "-" " " }}"
 tags = [""]
+type = "post"
+description = ""
+
 +++
