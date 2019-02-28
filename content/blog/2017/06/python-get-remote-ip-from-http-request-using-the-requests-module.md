@@ -41,7 +41,7 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 tcp6       0      0 192.168.1.10:80         192.168.1.254:38610     FIN_WAIT2   0          0          -
 ```
 
-With [context manager](https://docs.python.org/3.4/library/contextlib.html "contextlib"), the socket is closed at both ends:
+With [context manager](https://docs.python.org/3/reference/datamodel.html#context-managers "context manager"), the socket is closed at both ends:
 
 ```
 >>> with requests.get('http://exmaple.com/', stream=True) as r:
