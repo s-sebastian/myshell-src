@@ -94,7 +94,6 @@ while (*argument) *argument++ = 'x'; // Destroy argument
 
 import argparse
 import os
-import sys
 import time
 
 SLEEP = 600
@@ -109,10 +108,10 @@ parser.add_argument(
 )
 
 opts = parser.parse_args()
-pwd = opts.password
+password = opts.password
 
-if not pwd:
-    pwd = os.getenv('PASSWORD', None)
+if not password:
+    password = os.getenv('PASSWORD', None)
 
 print(f'Sleeping for {SLEEP}s. PID: {os.getpid()}')
 time.sleep(SLEEP)
