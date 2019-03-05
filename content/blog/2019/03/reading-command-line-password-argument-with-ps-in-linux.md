@@ -79,7 +79,7 @@ You need root privileges to read the pseudo-filesystem (`/proc`) and guess the v
 
 There are other methods, for instance the `mysql` client [replaces](https://github.com/mysql/mysql-server/blob/8.0/client/mysql.cc#L1930 "mysql.cc") the password from the command line with `x`:
 
-###### mysql.cc:
+###### mysql.cc
 
 ```
 while (*argument) *argument++ = 'x'; // Destroy argument
