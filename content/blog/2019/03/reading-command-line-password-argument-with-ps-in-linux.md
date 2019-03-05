@@ -9,7 +9,7 @@ description = "Reading command line password argument with \"ps\" in Linux"
 +++
 #### Introduction:
 
-I was recently reading an article online about some methods to hide password argument from system status programs like "ps" or "top" on Linux and decided to take a closer look.
+I was recently reading an article online about some methods to hide password argument from system status programs like "ps" or "top" in Linux and decided to take a closer look.
 
 I've created a simple [Python script](#program-py "program.py") that accepts a single argument for password, let's run it:
 
@@ -57,7 +57,7 @@ F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
 
 Cool, the password argument is no longer listed however we can still read environment variables from the stack of a running process with root privileges.
 
-Here is how, the `/proc/<pid>/maps` file contains the ranges of memory mapped to the process and what they are mapped to. Near the bottom there is a line with the range mapped to [stack]. Take a note of the start address (they are in hex notation) and calculate the size in bytes:
+Here is how, the `/proc/<pid>/maps` file contains the ranges of memory mapped to the process and what they are mapped to. Near the bottom there is a line with the range mapped to `[stack]`. Take a note of the start address (they are in hex notation) and calculate the size in bytes:
 
 ```
 $ sudo cat /proc/18639/maps | grep "\[stack\]"
