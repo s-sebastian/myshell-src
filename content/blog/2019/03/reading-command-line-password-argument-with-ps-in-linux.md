@@ -9,7 +9,7 @@ description = "Reading command line password argument with \"ps\" in Linux"
 +++
 #### Introduction:
 
-I was recently reading an article online about some methods to hide password argument from system status programs like "ps" or "top" in Linux and decided to take a closer look.
+I was recently reading an article online about some methods to hide password argument from system status programs like "ps" or "top" in Linux and I decided to take a closer look.
 
 I've created a simple [Python script](#program-py "program.py") that accepts a single argument for password, let's run it:
 
@@ -130,7 +130,7 @@ source tmp.$$ && ./program.py &
 shred -fuz tmp.$$
 ```
 
-I've also created another Python script that we'll dump memory from the stack. The output is a long bytestring so pipe it to `less`:
+I've also created another Python script that will dump memory from the stack. The output is a long bytestring so pipe it to `less`:
 
 ###### stack_mem.py
 
