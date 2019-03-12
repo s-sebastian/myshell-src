@@ -40,20 +40,31 @@ The columns returned are the following:
 3. A label which denotes a possible **`JUMP` from an earlier instruction** to this one
 4. The **address** in the bytecode which corresponds to the byte index (those are multiples of 2 because Python 3.6 use 2 bytes for each instruction, while it could vary in previous versions):
 ```
->>> code = list(test.__code__.co_code)
+>>> code = test.__code__.co_code
 >>> code
+b't\x00|\x00\x83\x01S\x00'
+>>> l = list(code)
+>>> l
 [116, 0, 124, 0, 131, 1, 83, 0]
+>>> l[0]
+116
+>>> l[2]
+124
+>>> l[4]
+131
+>>> l[6]
+83
 ```
 
 5. The instruction name (also called **opname**), each one is briefly explained in the [`dis`](https://docs.python.org/3/library/dis.html#python-bytecode-instructions "dis module") module:
 ```
->>> dis.opname[code[0]]
+>>> dis.opname[116]
 'LOAD_GLOBAL'
->>> dis.opname[code[2]]
+>>> dis.opname[124]
 'LOAD_FAST'
->>> dis.opname[code[4]]
+>>> dis.opname[131]
 'CALL_FUNCTION'
->>> dis.opname[code[6]]
+>>> dis.opname[83]
 'RETURN_VALUE'
 ```
 
