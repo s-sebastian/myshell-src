@@ -15,6 +15,7 @@ A reference guide for disassembling Python bytecode.
 >>> def test(value):
 ...     return len(value)
 ... 
+>>> import dis
 >>> dis.dis(test)
   2           0 LOAD_GLOBAL              0 (len)
               2 LOAD_FAST                0 (value)
@@ -56,7 +57,7 @@ b't\x00|\x00\x83\x01S\x00'
 83
 ```
 
-5. The instruction name (also called **opname**), each one is briefly explained in the [`dis`](https://docs.python.org/3/library/dis.html#python-bytecode-instructions "dis module") module:
+5. The instruction name (also called **opname**), each one is briefly explained in the [`dis`](https://docs.python.org/3/library/dis.html#python-bytecode-instructions "dis") module:
 ```
 >>> dis.opname[116]
 'LOAD_GLOBAL'
