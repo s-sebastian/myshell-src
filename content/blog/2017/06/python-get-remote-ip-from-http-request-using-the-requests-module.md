@@ -27,7 +27,7 @@ r = requests.get('http://exmaple.com', stream=True)
 
 At this point only the response headers have been downloaded and the connection remains open until we access the `Response.content`
 
-[Here](http://docs.python-requests.org/en/master/user/advanced/#body-content-workflow "Requests") is the important part for this:
+[Here](https://requests.readthedocs.io/en/master/user/advanced/#body-content-workflow "Requests") is the important part for this:
 
 > If you set stream to True when making a request, Requests cannot release the connection back to the pool unless you consume all the data or call Response.close. This can lead to inefficiency with connections. If you find yourself partially reading request bodies (or not reading them at all) while using stream=True, you should make the request within a with statement to ensure it's always closed
 
