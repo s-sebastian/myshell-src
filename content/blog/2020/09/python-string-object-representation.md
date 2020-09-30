@@ -239,7 +239,7 @@ b'\x19\xf4\x01\x00\x00\x00\x00\x00'
 72
 ```
 
-So the bytes from position 72 to 74 hold 4 bytes code point for our octopus:
+So the bytes from position 72 to 76 hold 4 bytes code point for our octopus:
 
 ```
 >>> chr(int.from_bytes(s_mem[72:72+4], 'little'))
