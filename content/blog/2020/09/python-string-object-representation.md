@@ -246,4 +246,15 @@ So the bytes from position 72 to 76 hold 4 bytes code point for our octopus:
 '🐙'
 ```
 
+A bonus tip at the end how to modify our string in memory:
+
+```
+>>> s
+'🐙'
+>>> data = (ctypes.c_ubyte * 4).from_address(id(s) + 72)
+>>> data[0] = 0x20
+>>> s
+'🐠'
+```
+
 That's it!
