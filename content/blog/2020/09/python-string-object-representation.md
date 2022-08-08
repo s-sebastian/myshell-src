@@ -257,4 +257,4 @@ A bonus tip at the end how to modify our string in memory:
 '🐠'
 ```
 
-That's it!
+**NOTE:** This violates the immutability of a Python string of course so don't try this at home!
