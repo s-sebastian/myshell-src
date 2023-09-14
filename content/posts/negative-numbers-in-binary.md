@@ -12,7 +12,7 @@ We'll discuss three methods of extending the binary numeral system to represent 
 
 - [Signed magnitude representation (SMR)](#signed-magnitude-representation-smr "Signed magnitude representation")
 - [Ones' complement (1C)](#ones-complement-1c "Ones' complement")
-- [Two's complement (2C)](#two-s-complement-2c "Two's complement")
+- [Two's complement (2C)](#twos-complement-2c "Two's complement")
 
 The leftmost bit of a **signed** integer (known as the **sign bit**) is 0 if the number is positive or zero, 1 if it's negative.
 
@@ -185,7 +185,7 @@ In the example above we declare a variable of type *unsigned short int*.  The si
 - `%hu` - Unsigned integer (short)
 - `%hi` - Signed integer (short)
 
-The first one says the 16 bits are to be interpreted as an unsigned integer so we get `65535` however the second one interprets the value as a signed integer so the most significant bit is used to hold the sign bit, thus `(1)111 1111 1111 1111` represents `-1` in [two's complement](#two-s-complement-2c "two's complement") notation:
+The first one says the 16 bits are to be interpreted as an unsigned integer so we get `65535` however the second one interprets the value as a signed integer so the most significant bit is used to hold the sign bit, thus `(1)111 1111 1111 1111` represents `-1` in [two's complement](#twos-complement-2c "two's complement") notation:
 
 ```
 $ python3 -c 'print(65535 - (1 << 16))'

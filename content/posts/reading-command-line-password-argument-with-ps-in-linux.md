@@ -10,7 +10,7 @@ description = "Reading command line password argument with \"ps\" in Linux"
 
 I was recently reading an article online about some methods to hide password argument from system status programs like "ps" or "top" in Linux and I decided to take a closer look.
 
-I've created a simple [Python script](#program-py "program.py") that accepts a single argument for password, let's run it:
+I've created a simple [Python script](#programpy "program.py") that accepts a single argument for password, let's run it:
 
 ```
 $ ./program.py -p secret123 &
@@ -40,7 +40,7 @@ optional arguments:
                         User password. Can be provided as an env variable.
 ```
 
-Assuming we can't modify the original script, let's use [a wrapper script](#wrapper-sh "wrapper.sh") that will store the password in environmental variable:
+Assuming we can't modify the original script, let's use [a wrapper script](#wrappersh "wrapper.sh") that will store the password in environmental variable:
 
 ```bash
 $ ./wrapper.sh
