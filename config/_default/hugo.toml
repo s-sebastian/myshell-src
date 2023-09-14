@@ -5,7 +5,7 @@ enableRobotsTXT = true
 theme = "terminal"
 paginate = 10
 # enableGitInfo = true
-disqusShortname = "yourDisqusShortname"
+disqusShortname = "myshell"
 
 [params]
   contentTypeName = "posts"
