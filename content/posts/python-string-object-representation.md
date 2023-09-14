@@ -2,16 +2,15 @@
 date = "2020-09-30T13:53:55+01:00"
 title = "Python string object representation"
 tags = ["cpython", "python", "gdb", "object", "structure", "unicode"]
-# type = "post"
 description = "Python string object representation"
 categories = ["Linux"]
-
 +++
+
 #### Introduction:
 
 This post will try to explain this simple code snippet:
 
-```
+```python
 >>> import sys
 >>> s = "A"
 >>> len(s)
@@ -26,7 +25,7 @@ The strings in Python are not simply an array of characters like C-strings also 
 
 According to the documentation, [sys.getsizeof](https://docs.python.org/3/library/sys.html#sys.getsizeof) returns the size of an **object** in bytes. A string objects in Python are really sequences of unicode characters and we can use this simple trick to get the actual size of a single code point:
 
-```
+```python
 >>> s = "A"
 >>> sys.getsizeof(s + "@") - sys.getsizeof(s)
 1
@@ -45,7 +44,7 @@ The [PEP 393](https://www.python.org/dev/peps/pep-0393/) introduced *"Flexible S
 
 We use ASCII character in our first example so it should be stored as  `PyASCIIObject` instance:
 
-```
+```c
 typedef struct {
   PyObject_HEAD
   Py_ssize_t length;
@@ -128,7 +127,7 @@ We can also find the string itself, according to PEP 393, our string should be l
 
 Let's decode and confirm some of these fields in Python:
 
-```
+```python
 >>> import ctypes
 >>> import struct
 >>> s = "A"
@@ -141,7 +140,7 @@ b'\x14\x00\x00\x00\x00\x00\x00\x00\xc0&\x90\x00\x00\x00\x00\x00\x01\x00\x00\x00\
 
 The last two bytes are our string and null character (`'\0'`)
 
-```
+```python
 >>> s_mem[-len(s)-1:]
 b'A\x00'
 >>> len(s_mem[-len(s)-1:])
@@ -150,14 +149,14 @@ b'A\x00'
 
 The first 48 bytes are occupied by the object structure:
 
-```
+```python
 >>> len(s_mem[:-len(s)-1])
 48
 ```
 
 We can also decode and check the values for `length` and `hash` fields from the struct and they should be equal to `len(s)` and `hash(s)` respectively:
 
-```
+```python
 >>> obj_length, obj_hash = struct.unpack('<Qq', s_mem[16:16+8+8])
 >>> len(s)
 1
@@ -226,7 +225,7 @@ The bytes sequence is expressed in [little-endian (LE)](https://en.wikipedia.org
 
 We can also confirm the same in Python interactive shell:
 
-```
+```python
 >>> s = "🐙"
 >>> s_mem = ctypes.string_at(id(s), sys.getsizeof(s))
 >>> s_mem
@@ -241,14 +240,14 @@ b'\x19\xf4\x01\x00\x00\x00\x00\x00'
 
 So the bytes from position 72 to 76 hold 4 bytes code point for our octopus:
 
-```
+```python
 >>> chr(int.from_bytes(s_mem[72:72+4], 'little'))
 '🐙'
 ```
 
 A bonus tip at the end how to modify our string in memory:
 
-```
+```python
 >>> s
 '🐙'
 >>> data = (ctypes.c_ubyte * 4).from_address(id(s) + 72)

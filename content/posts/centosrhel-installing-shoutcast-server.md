@@ -3,9 +3,7 @@ categories = ["Linux"]
 date = "2012-09-20T07:23:00Z"
 description = "CentOS/RHEL: Installing SHOUTcast Server"
 tags = ["shoutcast"]
-# type = "post"
 title = "CentOS/RHEL: Installing SHOUTcast Server"
-
 +++
 
 **Note:** This article is outdated now.

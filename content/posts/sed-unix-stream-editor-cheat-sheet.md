@@ -2,10 +2,8 @@
 categories = ["Scripts"]
 description = "Sed - UNIX Stream Editor - Cheat Sheet"
 tags = ["bash", "sed"]
-# type = "post"
 date = "2012-07-07T13:11:00+01:00"
 title = "Sed - UNIX Stream Editor - Cheat Sheet"
-
 +++
 
 #### Usage:
@@ -116,8 +114,6 @@ or
 "&" - pattern matched OR the values in the pattern space
 
     sed -ne 's/.*/&/p' file.txt
-
-\
 
     sed -ne 's/.*/Example: &/p' file.txt
 

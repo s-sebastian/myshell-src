@@ -3,9 +3,7 @@ categories = ["Quick Tips"]
 date = "2012-07-17T15:51:00+01:00"
 description = "How to determine the number of physical CPUs on Linux"
 tags = ["/proc/cpuinfo"]
-# type = "post"
 title = "How to determine the number of physical CPUs on Linux"
-
 +++
 
 The **/proc/cpuinfo** file contains information about the CPUs installed on your computer however it’s quite confusing when you have to deal with multi-core processors.

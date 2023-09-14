@@ -2,11 +2,10 @@
 date = "2020-05-15T15:06:19+01:00"
 title = "Python: the old bug in SQLite module strikes back"
 tags = ["python", "sqlite3", "gdb"]
-# type = "post"
 description = "Python: the old bug in SQLite module strikes back"
 categories = ["Linux"]
-
 +++
+
 #### Introduction:
 
 **NOTE:** The problem is related to Python 2 but I'll be referring to Python 3 documentation unless it's not applicable.
@@ -15,7 +14,7 @@ I was recently writing some Python code that was using the [SQLite module](https
 
 The code was pulling data from different sources in chunks, saved the records into the local database and then data was sent to an API endpoint at each iteration. The logic was something like this:
 
-```
+```python
 with DB() as db:
     db.init()
 
@@ -42,7 +41,7 @@ GDB 7.6.1
 
 This is a simplified test case to reproduce the issue:
 
-```
+```python
 import sqlite3
 
 
@@ -146,7 +145,7 @@ The condition says "pause" if `parameters` size is 1 and if that's the case, we 
 
 This is equivalent to the following Python code:
 
-```
+```python
 >>> parameters = ('b',)
 >>> len(parameters) and parameters[0] == 'b'
 True
@@ -231,7 +230,7 @@ The `pysqlite_statement_bind_parameter` return code was `21` and according to [S
 
 We remember that the exception actually happens around the _commit_ so let's change our focus on that. The `pysqlite_connection_commit` subroutine is located in `connection.c`:
 
-```
+```c
 PyObject* pysqlite_connection_commit(pysqlite_Connection* self, PyObject* args)
 ```
 
@@ -430,7 +429,7 @@ $ cat ~/issue10513.patch
          Py_BEGIN_ALLOW_THREADS
          rc = sqlite3_prepare(self->db, "COMMIT", -1, &statement, &tail);
 ```
-\
+
 ```
 $ pyenv install -f -k -v -g -p 2.7.9 < ~/issue10513.patch
 ~/.pyenv/sources/2.7.9-debug ~
@@ -440,7 +439,7 @@ patching file Modules/_sqlite/connection.c
 Hunk #1 succeeded at 458 (offset -1 lines).
 ...
 ```
-\
+
 ```
 $ pyenv local 2.7.9-debug
 $ python --version

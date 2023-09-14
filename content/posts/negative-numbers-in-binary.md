@@ -3,10 +3,9 @@ categories = ["Linux"]
 date = "2019-05-28T14:30:20+01:00"
 title = "Negative numbers in binary"
 tags = ["binary", "signed numbers"]
-# type = "post"
 description = "Negative numbers in binary"
-
 +++
+
 This blog post is primarily based on Wikipedia article about [Signed number representations](https://en.wikipedia.org/wiki/Signed_number_representations "Signed number representations").
 
 We'll discuss three methods of extending the binary numeral system to represent signed numbers:
@@ -165,7 +164,7 @@ We can use the following rule to check for this condition - if carry value going
 
 #### Example:
 
-```bash
+```
 $ cat example.c 
 #include <stdio.h>
 
@@ -188,7 +187,7 @@ In the example above we declare a variable of type *unsigned short int*.  The si
 
 The first one says the 16 bits are to be interpreted as an unsigned integer so we get `65535` however the second one interprets the value as a signed integer so the most significant bit is used to hold the sign bit, thus `(1)111 1111 1111 1111` represents `-1` in [two's complement](#two-s-complement-2c "two's complement") notation:
 
-```bash
+```
 $ python3 -c 'print(65535 - (1 << 16))'
 -1
 ```

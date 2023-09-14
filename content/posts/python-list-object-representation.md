@@ -2,11 +2,10 @@
 date = "2021-09-21T18:15:41+01:00"
 title = "Python list object representation"
 tags = ["cpython", "ctypes", "python", "object", "structure"]
-# type = "post"
 description = "Python list object representation"
 categories = ["Linux"]
-
 +++
+
 #### Introduction:
 
 In the [previous](/blog/2020/09/python-string-object-representation/ "Python string object representation") blog post we were looking at internal representation of Python string objects in memory.
@@ -17,7 +16,7 @@ In this article we'll delve into the C-level details and read the internals of a
 
 The [PyListObject](https://docs.python.org/3/c-api/list.html#c.PyListObject) is defined in [cpython/Include/cpython/listobject.h](https://github.com/python/cpython/blob/3.9/Include/cpython/listobject.h#L9-L26) file and has the following structure:
 
-```
+```c
 typedef struct {
     PyObject_VAR_HEAD
     /* Vector of pointers to list elements.  list[0] is ob_item[0], etc. */
@@ -42,7 +41,7 @@ The `ob_item` structure member holds pointers to the elements of the list and we
 
 ###### test.py
 
-```
+```python
 #!/usr/bin/env python3
 
 import ctypes

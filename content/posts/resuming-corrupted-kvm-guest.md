@@ -3,9 +3,7 @@ categories = ["Quick Tips"]
 date = "2012-07-12T07:49:00+01:00"
 description = "Restoring a KVM guest from corrupted resume state"
 tags = ["kvm", "virsh"]
-# type = "post"
 title = "Restoring a KVM guest from corrupted resume state"
-
 +++
 
 #### Problem:

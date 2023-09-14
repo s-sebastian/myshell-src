@@ -3,9 +3,7 @@ categories = ["Scripts"]
 date = "2012-07-14T19:02:00+01:00"
 description = "Awk - Reporting Tool - Cheat Sheet"
 tags = ["bash", "awk", "linux"]
-# type = "post"
 title = "Awk - Reporting Tool - Cheat Sheet"
-
 +++
 
 #### Usage:
@@ -43,8 +41,6 @@ or
 
     awk '{ print $1; print $2 }' file.txt
 
-\
-
     awk '{ print $1, $2 }' file.txt
 
 \- print columns from lines containing pattern:
@@ -77,8 +73,6 @@ Awk scripts consist of 3 parts:
 
     awk 'BEGIN { print "exmaple" }'
 
-\
-
     awk 'BEGIN { FS = ":"; print "Beginning" } $7 ~ /nologin/ { print $1, $7 } END { print "End" }' /etc/passwd
 
 Example:
@@ -105,8 +99,6 @@ Types:
 1\. System - i.e. FILENAME, RS, ORS...
 
     awk '{ print; print "Number of fields on the line: " NF } END { print "Input file: " FILENAME }' file.txt
-
-\
 
     awk 'BEGIN { OFS="\t\t\t" }; { print $1, $2 }' file.txt
 
@@ -144,8 +136,6 @@ Awk 'if' statement:
 
     awk '{ if ( $1 ~ /four/ ) print $2 }' file.txt
 
-\
-
     awk '{ if ( $1 == "four" ) print $2; else print $1 }' file.txt
 
 #### Awk loops:
@@ -156,15 +146,9 @@ Awk 'if' statement:
 
     awk '{ for(i=1; i<=5; ++i) print $0,i }' file.txt
 
-\
-
     awk 'BEGIN { for (i=1; i <= 10; ++i) print i }'
 
-\
-
     awk 'BEGIN { for (i=1; i <= ARGV[1]; ++i) print i }' 10
-
-\
 
     awk 'BEGIN { max=ARGV[1]; for (i=1; i <= max; ++i) print i }' 10
 
@@ -200,11 +184,7 @@ General format section:
 
     awk 'BEGIN { printf("test\n") }'
 
-\
-
     awk 'BEGIN { printf ("Output:\n") } { printf ("%s\n", $1) }' file.txt
-
-\
 
     awk 'BEGIN { printf ("Output:\n") } { printf ("%s\t%s\n", $1,$2 ) }' file.txt
 
@@ -230,19 +210,13 @@ Porshe 250000
 Lamborgini 350000.99
 ```
 
-\
-
     awk 'BEGIN { printf ("Price list:\n\n") } { printf ("%-10s\t£%.2f\n", $1,$2 ) }' file2.txt
-
-\
 
     awk '{ cars[NR] = $1 } END { print "Total Command-line Arguments: " ARGC; for ( i=1; i <= NR; i++) printf ("%-12s %1d %-2s %-10s\n", "CARS", i, ": ", cars[i] ) }' file2.txt
 
 \- apply upper and lower-case formatting to Printf values:
 
     awk '{ cars[NR] = $1 } END { for ( i=1; i <= NR; i++) printf ("%-12s %1d %-2s %-10s\n", "CARS", i, ": ", toupper(cars[i]) ) }' file2.txt
-
-\
 
     awk '{ cars[NR] = $1 } END { for ( i=1; i <= NR; i++) printf ("%-12s %1d %-2s %-10s\n", "CARS", i, ": ", tolower(cars[i]) ) }' file2.txt
 

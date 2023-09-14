@@ -3,10 +3,9 @@ categories = ["Linux"]
 date = "2019-03-04T15:21:11Z"
 title = "Reading command line password argument with \"ps\" in Linux"
 tags = ["linux", "ps", "top", "/proc"]
-# type = "post"
 description = "Reading command line password argument with \"ps\" in Linux"
-
 +++
+
 #### Introduction:
 
 I was recently reading an article online about some methods to hide password argument from system status programs like "ps" or "top" in Linux and I decided to take a closer look.
@@ -81,7 +80,7 @@ There are other methods, for instance the `mysql` client [replaces](https://gith
 
 ###### mysql.cc
 
-```
+```cpp
 while (*argument) *argument++ = 'x'; // Destroy argument
 ```
 
@@ -89,7 +88,7 @@ while (*argument) *argument++ = 'x'; // Destroy argument
 
 ###### program.py
 
-```
+```python
 #!/usr/bin/env python3
 
 import argparse
@@ -119,7 +118,7 @@ time.sleep(SLEEP)
 
 ###### wrapper.sh
 
-```
+```bash
 #!/usr/bin/env bash
 
 read -s -p "Enter your secret: " secret
@@ -134,7 +133,7 @@ I've also created another Python script that will dump memory from the stack. Th
 
 ###### stack_mem.py
 
-```
+```python
 #!/usr/bin/env python3
 
 import argparse

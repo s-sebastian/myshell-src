@@ -3,9 +3,7 @@ categories = ["Linux"]
 date = "2012-07-26T15:03:00+01:00"
 description = "Adjusting child processes for PHP-FPM (Nginx)"
 tags = ["awk", "nginx", "php-fpm"]
-# type = "post"
 title = "Adjusting child processes for PHP-FPM (Nginx)"
-
 +++
 
 #### Problem:

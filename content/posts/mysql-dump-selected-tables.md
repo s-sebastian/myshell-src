@@ -3,9 +3,7 @@ categories = ["Database"]
 date = "2012-07-17T17:15:00+01:00"
 description = "MySQL: dump selected tables"
 tags = ["mysql", "mysqldump"]
-# type = "post"
 title = "MySQL: dump selected tables"
-
 +++
 
 Today I had to dump a dozen of tables from one MySQL database. I could list them all on the command line, something like this:

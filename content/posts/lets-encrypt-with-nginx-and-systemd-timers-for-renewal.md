@@ -2,10 +2,8 @@
 date = "2017-02-21T11:15:43Z"
 title = "Let's encrypt with Nginx and systemd timers for renewal"
 tags = ["certbot", "nginx", "systemd"]
-# type = "post"
 description = "Let's encrypt with Nginx and systemd timers for renewal"
 categories = ["Linux"]
-
 +++
 
 [Let's Encrypt](https://letsencrypt.org/ "Let's Encrypt") is a free, automated, and open certificate authority utilizing the [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment "ACME") protocol.

@@ -1,11 +1,9 @@
 +++
-# type = "post"
 description = "LAMP: Troubleshooting slow website with strace and lsof"
 categories = ["Linux"]
 date = "2017-02-20T10:29:28Z"
 title = "LAMP: Troubleshooting slow website with strace and lsof"
 tags = ["apache", "lamp", "lsof", "strace"]
-
 +++
 
 #### Problem:

@@ -2,10 +2,8 @@
 date = "2017-08-13T14:42:24+01:00"
 title = "Hunting for memory in Linux system (pstore)"
 tags = ["slabinfo", "pstore"]
-# type = "post"
 description = "Hunting for memory in Linux system (pstore)"
 categories = ["Linux"]
-
 +++
 
 I was troubleshooting a server with 24GB of RAM that was running "low" on memory:

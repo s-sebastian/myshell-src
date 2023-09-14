@@ -3,9 +3,7 @@ categories = ["Linux"]
 date = "2012-08-26T23:52:35+00:00"
 description = "How-to extend a root LVM partition online"
 tags = ["lvm", "resize2fs"]
-# type = "post"
 title = "How-to extend a root LVM partition online"
-
 +++
 
 This guide will explain you how to extend a root LVM partition online.
@@ -34,8 +32,6 @@ It turned out 111513 of 4KB blocks were reserved for the superuser, which was ex
 tune2fs 1.41.12 (17-May-2010)
 Setting reserved blocks percentage to 0% (0 blocks)
 ```
-
-\
 
 ```
 # df -Th

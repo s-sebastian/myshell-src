@@ -2,11 +2,10 @@
 date = "2017-06-19T10:07:18+01:00"
 title = "Python: get remote IP from HTTP request using the requests module"
 tags = ["python", "requests"]
-# type = "post"
 description = "Python: get remote IP from HTTP request using the requests module"
 categories = ["Linux"]
-
 +++
+
 #### Introduction:
 
 This is just a quick tip how to get the IP address from a http request using the requests module from Python's standard library.
@@ -21,7 +20,7 @@ urllib3 1.21.1
 
 In order to get the IP, we need to use "stream" parameter to keep the connection open:
 
-```
+```python
 r = requests.get('http://exmaple.com', stream=True)
 ```
 
@@ -43,14 +42,12 @@ tcp6       0      0 192.168.1.10:80         192.168.1.254:38610     FIN_WAIT2   
 
 With [context manager](https://docs.python.org/3/reference/datamodel.html#context-managers "context manager"), the socket is closed at both ends:
 
-```
+```python
 >>> with requests.get('http://exmaple.com/', stream=True) as r:
 ...     r.status_code
 ... 
 404
 ```
-
-\
 
 ```
 # netstat -entp
@@ -62,7 +59,7 @@ tcp6       0      0 192.168.1.10:80         192.168.1.254:44124     TIME_WAIT   
 
 Now, let's get back to the main point here, `requests.raw._original_response` is a `http.client.HTTPResponse` instance, `.fp` is the socketfile, which here consists of a buffer wrapping a SocketIO object with the actual socket in the _sock attribute. So the original socket is available as `requests.raw._original_response.fp.raw._sock` and we can call `.getpeername()` on that:
 
-```
+```python
 >>> with requests.get('http://exmaple.com/', stream=True) as r:
 ...     r.raw._original_response.fp.raw._sock.getpeername()[0]
 ... 

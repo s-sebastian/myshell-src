@@ -3,9 +3,7 @@ categories = ["Linux"]
 date = "2012-07-12T22:57:00+01:00"
 description = "CentOS/RedHat: Secured phpMyAdmin on Nginx with SSL only"
 tags = ["nginx", "phpmyadmin"]
-# type = "post"
 title = "CentOS/RedHat: Secured phpMyAdmin on Nginx with SSL only"
-
 +++
 
 #### Introduction:
@@ -236,8 +234,6 @@ Change the owner and permissions so only “nginx” user can read the file:
 #### Start nginx and php-fpm daemons:
 
     chkconfig nginx on && service nginx start
-
-\
 
     chkconfig php-fpm on && service php-fpm start
 

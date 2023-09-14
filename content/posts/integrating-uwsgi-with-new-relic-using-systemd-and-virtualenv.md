@@ -3,10 +3,9 @@ categories = ["Linux"]
 date = "2017-07-05T10:13:31+01:00"
 title = "Integrating uWSGI with New Relic using systemd and virtualenv"
 tags = ["python", "django", "virtualenv", "uwsgi", "new relic"]
-# type = "post"
 description = "Integrating uWSGI with New Relic using systemd and virtualenv"
-
 +++
+
 #### Introduction:
 
 This article explains how to integrate uWSGI with New Relic for Python. We'll use the [admin script](https://docs.newrelic.com/docs/agents/python-agent/hosting-mechanisms/python-agent-uwsgi#wrapper-script "admin script"). This method is recommended because it is easy and doesn't require making changes to your app code.
