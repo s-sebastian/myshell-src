@@ -4,6 +4,7 @@ date = "2012-09-20T07:23:00Z"
 description = "CentOS/RHEL: Installing SHOUTcast Server"
 tags = ["shoutcast"]
 title = "CentOS/RHEL: Installing SHOUTcast Server"
+slug = "centosrhel-installing-shoutcast-server"
 +++
 
 **Note:** This article is outdated now.

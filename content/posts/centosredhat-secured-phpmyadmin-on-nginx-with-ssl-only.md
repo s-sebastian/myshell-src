@@ -4,6 +4,7 @@ date = "2012-07-12T22:57:00+01:00"
 description = "CentOS/RedHat: Secured phpMyAdmin on Nginx with SSL only"
 tags = ["nginx", "phpmyadmin"]
 title = "CentOS/RedHat: Secured phpMyAdmin on Nginx with SSL only"
+slug = "centosredhat-secured-phpmyadmin-on-nginx-with-ssl-only"
 +++
 
 #### Introduction:
