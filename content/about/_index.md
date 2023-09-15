@@ -2,11 +2,10 @@
 title = "About"
 +++
 
-My name is `Sebastian`. I am writing and maintaining this blog to document my expedition in exploring servers, systems, platforms, Internet and any computer-related technologies. I work as a Linux System Administrator in UK.
+Welcome to my `SHELL`!
 
-Any comment, complaint, correction, suggestion and recommendation is highly appreciated. Please use comment section inside post page.
+This platform chronicles my journey and insights as a DevOps Engineer and Developer, delving deep into servers, systems, and a myriad of computer-related technologies. With a strong foundation in both system administration and development, I aim to bridge the gap between infrastructure and code.
 
-Any material in this blog can be distribute legally as long as you give credit to the author.
+For comments, corrections, or suggestions, please use the comment sections within the posts.
 
-Regards,  
-Sebastian
+Any material from this blog can be distributed legally, provided you give credit to the author.
