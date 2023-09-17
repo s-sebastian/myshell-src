@@ -10,7 +10,7 @@ This guide will explain you how to extend a root LVM partition online.
 
 There is also a quick remedy for the emergency situation when your root partition runs out of disk space. There is a feature specific to ext3 and ext4 that can help the goal of resolving the full disk situation. Unless explicitly changed during filesystem creation, both by default reserve five percent (5%) of a volume capacity to the superuser (root).
 
-```
+```sh-session
 # df -Th
 Filesystem    Type    Size  Used Avail Use% Mounted on
 /dev/mapper/vg_main-lv_root
@@ -27,13 +27,13 @@ It turned out 111513 of 4KB blocks were reserved for the superuser, which was ex
 
 **How to enable it?**
 
-```
+```sh-session
 # tune2fs -m 0 /dev/vg_main/lv_root 
 tune2fs 1.41.12 (17-May-2010)
 Setting reserved blocks percentage to 0% (0 blocks)
 ```
 
-```
+```sh-session
 # df -Th
 Filesystem    Type    Size  Used Avail Use% Mounted on
 /dev/mapper/vg_main-lv_root
@@ -46,7 +46,9 @@ Now that we have some free space on the root partition to work on we can extend 
 
 Create a new partition of appropriate size using fdisk
 
-    fdisk /dev/sdb1
+```sh-session
+# fdisk /dev/sdb1
+```
 
 This is a key sequence on the keyboard to create a new LVM type (8e) partition:
 
@@ -54,7 +56,7 @@ n, p, 1, enter (accept default first sector), enter (accept default last sector)
 
 Create a new Physical Volume
 
-```
+```sh-session
 # pvcreate /dev/sdb1
   Writing physical volume data to disk "/dev/sdb1"
   Physical volume "/dev/sdb1" successfully created
@@ -62,7 +64,7 @@ Create a new Physical Volume
 
 Extend a Volume Group
 
-```
+```sh-session
 # vgextend vg_main /dev/sdb1
   Volume group "vg_main" successfully extended
 ```
@@ -71,7 +73,7 @@ Extend your LVM
 
 \- extend the size of your LVM by the amount of free space on PV
 
-```
+```sh-session
 # lvextend /dev/vg_main/lv_root /dev/sdb1
   Extending logical volume lv_root to 18.50 GiB
   Logical volume lv_root successfully resized
@@ -79,13 +81,13 @@ Extend your LVM
 
 \- or with a given size
 
-
-    lvextend -L +10G /dev/vg_main/lv_root
-
+```sh-session
+# lvextend -L +10G /dev/vg_main/lv_root
+```
 
 Finally resize the file system online
 
-```
+```sh-session
 # resize2fs /dev/vg_main/lv_root
 resize2fs 1.41.12 (17-May-2010)
 Filesystem at /dev/vg_main/lv_root is mounted on /; on-line resizing required
@@ -96,11 +98,13 @@ The filesystem on /dev/vg_main/lv_root is now 4850688 blocks long.
 
 Now we can set the reserved blocks back to the default percentage - 5%
 
-    tune2fs -m 5 /dev/mapper/vg_main-lv_root
+```sh-session
+# tune2fs -m 5 /dev/mapper/vg_main-lv_root
+```
 
 Results:
 
-```
+```sh-session
 # df -Th
 Filesystem    Type    Size  Used Avail Use% Mounted on
 /dev/mapper/vg_main-lv_root

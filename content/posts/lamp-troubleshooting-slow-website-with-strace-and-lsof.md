@@ -17,7 +17,7 @@ In order to strace a single Apache process I had to access this site from a web 
 
 I changed the `User-Agent` header to easily grep through the logs.
 
-```
+```sh-session
 # curl -v -s -o /dev/null -A "DEBUG" -H "Host: example.com" http://10.10.0.10:80/
 * About to connect() to 10.10.0.10 port 80 (#0)
 *   Trying 10.10.0.10... connected
@@ -31,7 +31,7 @@ I changed the `User-Agent` header to easily grep through the logs.
 
 This was taking to long and after a few minutes we finally got a reply:
 
-```
+```http
 < HTTP/1.1 200 OK
 < Date: Fri, 17 Feb 2017 11:10:44 GMT
 < Server: Apache
@@ -51,7 +51,7 @@ This was taking to long and after a few minutes we finally got a reply:
 
 While curl is still running, we'll check its source port, it will help us to identify PID for Apache:
 
-```
+```sh-session
 # lsof -i 4 -a -c curl
 COMMAND   PID  USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
 curl    18421  root   3u  IPv4 1556243712      0t0  TCP web01.local:59054->web01.local:http (ESTABLISHED)
@@ -59,7 +59,7 @@ curl    18421  root   3u  IPv4 1556243712      0t0  TCP web01.local:59054->web01
 
 Now, we can find Apache process that is communicating with curl on port from the command above:
 
-```
+```sh-session
 # lsof -a -c httpd -i TCP:59054
 COMMAND  PID   USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
 httpd   4955 apache    8u  IPv4 1556230695      0t0  TCP web01.local:http->web01.local:59054 (ESTABLISHED)
@@ -67,7 +67,7 @@ httpd   4955 apache    8u  IPv4 1556230695      0t0  TCP web01.local:http->web01
 
 Time to see what is taking so long:
 
-```
+```sh-session
 # strace -ttT -s 512 -f -p 4955
 Process 4955 attached
 04:58:29.245680 epoll_wait(10,
@@ -75,7 +75,7 @@ Process 4955 attached
 
 OK, so it's waiting on some event using file descriptor number 10, let's check that:
 
-```
+```sh-session
 # lsof -a -d 10 -p 4955
 COMMAND  PID   USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 httpd   4955 apache   10u  0000    0,9        0 5380 anon_inode
@@ -83,7 +83,7 @@ httpd   4955 apache   10u  0000    0,9        0 5380 anon_inode
 
 That's not helpful, let's dig deeper and check all threads:
 
-```
+```sh-session
 # pstree -Ap 4955
 httpd(4955)---php(18427)
 ```
@@ -91,7 +91,7 @@ httpd(4955)---php(18427)
 
 We'll check what this bad boy is doing and also exclude some system calls that make to much noise:
 
-```
+```sh-session
 # strace -ttT -s 512 -f -e 'trace=!clock_gettime' -p 18427
 Process 18427 attached
 [ Process PID=18427 runs in 32 bit mode. ]
@@ -107,7 +107,7 @@ Process 18427 attached
 
 Gotcha Ya, it's trying to read from FD 13, an external IP that is timing out:
 
-```
+```sh-session
 # lsof -a -d 13 -p 18427
 COMMAND   PID    USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
 php     18427 nonpriv   13u  IPv4 1556386925      0t0  TCP web01.local:54981->xxx.xxx.xxx.xxx:https (ESTABLISHED)

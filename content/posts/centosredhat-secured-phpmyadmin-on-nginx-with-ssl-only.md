@@ -24,21 +24,27 @@ We need some additional repositories. You can also use “yum-priorities” pack
 
 *Extra Packages for Enterprise Linux (EPEL)*
 
-    rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-7.noarch.rpm
+```sh-session
+# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-7.noarch.rpm
+```
 
 *Remi repository*
 
-    rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+```sh-session
+# rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+```
 
 *Nginx repository*
 
-    rpm  -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+```sh-session
+# rpm  -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+```
 
 Enable Remi Repository:
 
 **/etc/yum.repos.d/remi.repo**
 
-```
+```ini
 [remi]
 ...
 enabled=1
@@ -49,7 +55,7 @@ We need to exclude some packages from CentOS base repository:
 
 **/etc/yum.repos.d/CentOS-Base.repo**
 
-```
+```ini
 [base]
  ...
  exclude=php* mysql*
@@ -68,7 +74,7 @@ We need to also exclude Nginx package from EPEL repository:
 
 **/etc/yum.repos.d/epel.repo**
 
-```
+```ini
 [epel]
 ...
 exclude=nginx*
@@ -77,7 +83,9 @@ exclude=nginx*
 
 #### Install required packages:
 
-    yum install -y nginx php-fpm phpmyadmin php-pecl-apc  crypto-utils
+```sh-session
+yum install -y nginx php-fpm phpmyadmin php-pecl-apc  crypto-utils
+```
 
 YUM will take care of all dependencies.
 
@@ -85,7 +93,7 @@ YUM will take care of all dependencies.
 
 **/etc/php-fpm.d/www.conf**
 
-```
+```ini
 [www]
  listen = /var/run/php-fpm/$pool.sock
  listen.allowed_clients = 127.0.0.1
@@ -108,7 +116,7 @@ YUM will take care of all dependencies.
 
 **/etc/nginx/nginx.conf**
 
-```
+```nginx
 user  nginx;
  worker_processes  4;
 
@@ -216,26 +224,35 @@ include /etc/nginx/conf.d/*.conf;
 
 #### Create self-signed SSL certificate (This will start the genkey graphical user interface):
 
-    genkey pma.example.com --days 365
+```
+# genkey pma.example.com --days 365
+```
 
 Add the following line to phpMyAdmin config file to disable version check as this breaks the SSL connection:
 
 **/etc/phpMyAdmin/config.inc.php**
 
-    $cfg['VersionCheck'] = false;
+```php
+$cfg['VersionCheck'] = false;
+```
 
 #### Create user for web authentication:
 
-    htpasswd -mc /etc/nginx/.users username
+```sh-session
+# htpasswd -mc /etc/nginx/.users username
+```
 
 Change the owner and permissions so only “nginx” user can read the file:
 
-    chown nginx /etc/nginx/.users && chmod 600 /etc/nginx/.users
+```
+# chown nginx /etc/nginx/.users && chmod 600 /etc/nginx/.users
+```
 
 #### Start nginx and php-fpm daemons:
 
-    chkconfig nginx on && service nginx start
-
-    chkconfig php-fpm on && service php-fpm start
+```sh-session
+# chkconfig nginx on && service nginx start
+# chkconfig php-fpm on && service php-fpm start
+```
 
 Done!

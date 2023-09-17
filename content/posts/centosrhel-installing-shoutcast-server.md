@@ -29,24 +29,34 @@ The SHOUTcast Distributed Network Audio Server (DNAS 2.0) is responsible for the
 
 **Attention:** Please DO NOT run the DNAS as a root for the security reason, instead we'll create a shoutcast user
 
-    adduser shoutcast
+```sh-session
+# adduser shoutcast
+```
 
 Update the password of 'shoutcast' using
 
-    passwd shoutcast
+```sh-session
+# passwd shoutcast
+```
 
 Now login as the new shoutcast user, or you can su to the user
 
-    su - shoutcast
+```sh-session
+# su - shoutcast
+```
 
 Create a directory shoutcast
-
-    mkdir shoutcast
-    cd shoutcast
+ 
+```sh-session
+$ mkdir shoutcast
+$ cd shoutcast
+```
 
 First we need to download SHOUTcast server from nullsoft, (we are using 64-bit system)
 
-    wget http://download.nullsoft.com/shoutcast/tools/sc_serv2_linux_x64_07_31_2011.tar.gz
+```sh-session
+$ wget http://download.nullsoft.com/shoutcast/tools/sc_serv2_linux_x64_07_31_2011.tar.gz
+```
 
 We also need SHOUTcast Transcoder
 
@@ -54,19 +64,25 @@ We also need SHOUTcast Transcoder
 
 **Warning:** "In order to broadcast in MP3 format you will need to purchase an MP3 encoding license."
 
-    wget http://download.nullsoft.com/shoutcast/tools/sc_trans_linux_x64_10_07_2011.tar.gz
+```sh-session
+$ wget http://download.nullsoft.com/shoutcast/tools/sc_trans_linux_x64_10_07_2011.tar.gz
+```
 
 Extract both files:
 
-    tar xzf sc_serv2_linux_x64_07_31_2011.tar.gz ; tar xzf sc_trans_linux_x64_10_07_2011.tar.gz
+```sh-session
+$ tar xzf sc_serv2_linux_x64_07_31_2011.tar.gz ; tar xzf sc_trans_linux_x64_10_07_2011.tar.gz
+```
 
 Shoutcast has now been installed and you can tidy up the directory
 
-    rm -f sc_serv2_linux_x64_07_31_2011.tar.gz sc_trans_linux_x64_10_07_2011.tar.gz
+```sh-session
+$ rm -f sc_serv2_linux_x64_07_31_2011.tar.gz sc_trans_linux_x64_10_07_2011.tar.gz
+```
 
 You should have a similar list of files and directories as below
 
-```
+```sh-session
 [shoutcast@test shoutcast]$ ls -l
 total 6652
 drwxrwxr-x 2 shoutcast shoutcast    4096 Oct  7 21:41 calendar
@@ -103,7 +119,7 @@ You need to edit the configuration files according to your needs. We'll use basi
 
 **sc_serv_basic.conf:**
 
-```
+```ini
 logfile=logs/sc_serv.log
 w3clog=logs/sc_w3c.log
 banfile=control/sc_serv.ban
@@ -116,7 +132,7 @@ streampath=/test.aac
 
 **sc_trans_basic.conf:**
 
-```
+```ini
 logfile=logs/sc_trans.log
 calendarrewrite=0
 encoder_1=aacp
@@ -159,11 +175,15 @@ So it's time to fire up your radio station
 
 First we need to start SHOUTcast server and then transcoder. You can use separate terminal windows/tabs or software like "screen", the syntax is similar (./sc_serv <config_file>)
 
-    ./sc_serv  sc_serv_basic.conf
+```sh-session
+$ ./sc_serv  sc_serv_basic.conf
+```
 
 and
 
-    ./sc_trans  sc_trans_basic.conf
+```sh-session
+$ ./sc_trans  sc_trans_basic.conf
+```
 
 **Note:** You can also run both scripts as a daemon **"./sc_serv daemon <conf_file>"** or **"./sc_trans daemon <conf_file>"** (It maybe necessary to use absolute paths).
 

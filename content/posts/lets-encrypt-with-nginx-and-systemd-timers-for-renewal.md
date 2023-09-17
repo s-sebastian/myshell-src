@@ -14,23 +14,29 @@ We'll use [certbot](https://certbot.eff.org/ "Certbot"), the official client and
 
 If you are using CentOS/RHEL 7, Certbot is available in [EPEL](https://fedoraproject.org/wiki/EPEL "EPEL") (Extra Packages for Enterprise Linux). In order to use Certbot, we must first enable the EPEL repository:
 
-    # yum install -y epel-release
+```sh-session
+# yum install -y epel-release
+```
 
 Next, install Certbot itself:
 
-    # yum install -y certbot
+```sh-session
+# yum install -y certbot
+```
 
 #### Nginx:
 
 Create webroot directory:
 
-    # mkdir -p /var/www/letsencrypt
+```sh-session
+# mkdir -p /var/www/letsencrypt
+```
 
 Add this location to Nginx configuration file for your domain:
 
 **/etc/nginx/conf.d/example.conf**
 
-```
+```nginx
 ...
 location ^~ /.well-known/acme-challenge/ {
         root /var/www/letsencrypt;
@@ -46,14 +52,16 @@ When using the webroot method the Certbot client places a challenge response ins
 
 (You can use `--dry-run` switch to test the configuration first)
 
-    # certbot certonly --webroot -w /var/www/letsencrypt -d example.com -d www.example.com
+```sh-session
+# certbot certonly --webroot -w /var/www/letsencrypt -d example.com -d www.example.com
+```
 
 If the certificate was created successfully you can update Nginx configuration:
 
 **/etc/nginx/conf.d/example.conf**
 
 
-```
+```nginx
 server {
         server_name example.com www.exmaple.com;
         listen 80;
@@ -93,7 +101,7 @@ There is also a comment for systemd switch to do the same thing but it will relo
 
 **/etc/systemd/system/certbot.service**
 
-```
+```systemd
 [Unit]
 Description=Renew Let's Encrypt certificates
 After=network-online.target
@@ -108,7 +116,7 @@ Add a timer to renew the certificates daily, including a randomized delay so tha
 
 **/etc/systemd/system/certbot.timer**
 
-```
+```systemd
 [Unit]
 Description=Daily renewal of Let's Encrypt's certificates
 
@@ -123,7 +131,7 @@ WantedBy=timers.target
 
 Activate and enable the timer:
 
-```
+```sh-session
 # systemctl daemon-reload
 # systemctl start certbot.timer
 # systemctl enable certbot.timer
@@ -131,7 +139,7 @@ Activate and enable the timer:
 
 You can verify that the timer has been started with this command:
 
-```
+```sh-session
 # systemctl list-timers certbot.timer
 NEXT                         LEFT       LAST                         PASSED       UNIT          ACTIVATES
 Tue 2017-02-21 14:08:16 GMT  47min left Mon 2017-02-20 10:04:01 GMT  1 day 3h ago certbot.timer certbot.service
@@ -144,7 +152,7 @@ By default certificates should be renewed 30 days before the expiry date, you ca
 
 **/etc/letsencrypt/renewal/example.com.conf**
 
-```
+```ini
 ...
 renew_before_expiry = 10 days
 ...

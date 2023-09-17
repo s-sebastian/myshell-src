@@ -32,7 +32,7 @@ At this point only the response headers have been downloaded and the connection 
 
 We can see this in action using netstat. The Apache web server in this case, waits for the other side to shut down its half of the connection (FIN_WAIT2):
 
-```
+```sh-session
 # netstat -entp
 Active Internet connections (w/o servers)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode      PID/Program name    
@@ -49,7 +49,7 @@ With [context manager](https://docs.python.org/3/reference/datamodel.html#contex
 404
 ```
 
-```
+```sh-session
 # netstat -entp
 Active Internet connections (w/o servers)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode      PID/Program name    

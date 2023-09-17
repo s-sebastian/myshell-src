@@ -10,7 +10,7 @@ title = "Adjusting child processes for PHP-FPM (Nginx)"
 
 The following warning message appears in the logs:
 
-```
+```log
 [26-Jul-2012 09:49:59] WARNING: [pool www] seems busy (you may need to increase pm.start_servers, or pm.min/max_spare_servers), spawning 32 children, there are 8 idle, and 58 total children
 [26-Jul-2012 09:50:00] WARNING: [pool www] server reached pm.max_children setting (50), consider raising it
 ```
@@ -23,7 +23,7 @@ We need to calculate and change these values based on the amount of memory on th
 
 **/etc/php-fpm.d/www.conf**
 
-```
+```ini
 pm.max_children = 50
 pm.start_servers = 5
 pm.min_spare_servers = 5
@@ -32,7 +32,9 @@ pm.max_spare_servers = 35
 
 \- the following command will help us to determine the memory used by each (PHP-FPM) child process:
 
-    ps -ylC php-fpm --sort:rss
+```sh-session
+$ ps -ylC php-fpm --sort:rss
+```
 
 The RSS column shows non-swapped physical memory usage by PHP-FPM processes in kilo Bytes.
 
@@ -50,7 +52,7 @@ I left some memory for the system to breath. You need to take into account any o
 
 I've changed the settings as follow:
 
-```
+```ini
 pm.max_children = 70
 pm.start_servers = 20
 pm.min_spare_servers = 20
@@ -62,6 +64,8 @@ Please note that very high values does not mean necessarily anything good.
 
 You can check an average memory usage by single PHP-FPM process with this handy command:
 
-    ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'
+```sh-session
+$ ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'
+```
 
 You can use the same steps above to calculate the value for **MaxClients** for Apche web server - just substitute the **php-fpm** with **httpd**.

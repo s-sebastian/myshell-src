@@ -8,7 +8,7 @@ categories = ["Linux"]
 
 I was troubleshooting a server with 24GB of RAM that was running "low" on memory:
 
-```
+```sh-session
 # free -m
              total       used       free     shared    buffers     cached
 Mem:         24098      21986       2112          0        581       2370
@@ -18,7 +18,7 @@ Swap:         2046        662       1384
 
 The total memory usage for all processes was around 8GB but there was only 5GB free (including buffers and cache):
 
-```
+```sh-session
 # ps --no-headers -eo "rss,cmd" | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/1024,"M") }'
 8347M
 ```
@@ -27,7 +27,7 @@ The total memory usage for all processes was around 8GB but there was only 5GB f
 
 This little handy utility displays kernel [slab cache information](http://man7.org/linux/man-pages/man5/slabinfo.5.html "slabinfo") (/proc/slabinfo) in real time:
 
-```
+```sh-session
 # slabtop -o -s c
  Active / Total Objects (% used)    : 113308991 / 113556175 (99.8%)
  Active / Total Slabs (% used)      : 3018776 / 3018876 (100.0%)
@@ -46,14 +46,14 @@ There were other entries significantly contributing to memory usage but I'll ski
 
 It was enabled in kernel configuration file:
 
-```
+```sh-session
 # grep CONFIG_PSTORE_CONSOLE /boot/config-$(uname -r)
 CONFIG_PSTORE_CONSOLE=y
 ```
 
 This is how it looks like after disabling and re-compiling the kernel:
 
-```
+```sh-session
 # grep CONFIG_PSTORE_CONSOLE /boot/config-$(uname -r)
 # CONFIG_PSTORE_CONSOLE is not set
 ```

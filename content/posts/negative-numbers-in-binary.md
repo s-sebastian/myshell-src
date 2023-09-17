@@ -164,7 +164,7 @@ We can use the following rule to check for this condition - if carry value going
 
 #### Example:
 
-```
+```sh-session
 $ cat example.c 
 #include <stdio.h>
 
@@ -187,7 +187,7 @@ In the example above we declare a variable of type *unsigned short int*.  The si
 
 The first one says the 16 bits are to be interpreted as an unsigned integer so we get `65535` however the second one interprets the value as a signed integer so the most significant bit is used to hold the sign bit, thus `(1)111 1111 1111 1111` represents `-1` in [two's complement](#twos-complement-2c "two's complement") notation:
 
-```
+```sh-session
 $ python3 -c 'print(65535 - (1 << 16))'
 -1
 ```

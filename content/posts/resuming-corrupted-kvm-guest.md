@@ -10,7 +10,7 @@ title = "Restoring a KVM guest from corrupted resume state"
 
 The virtual machine doesn’t boot throwing the following error:
 
-```
+```sh-session
 # virsh start vm1
 error: failed to get domain 'vm1'
 error: Unable to read from monitor: Connection reset by peer
@@ -18,4 +18,6 @@ error: Unable to read from monitor: Connection reset by peer
 
 #### Solution:
 
-    # virsh managedsave-remove vm1
+```sh-session
+# virsh managedsave-remove vm1
+```

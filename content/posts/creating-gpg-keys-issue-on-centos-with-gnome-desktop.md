@@ -31,10 +31,14 @@ gpg: Key generation canceled.
 
 Install one of the "Passphrase/PIN entry dialog" that are available on the system:
 
-yum install -y pinentry-gtk.x86_64
+```sh-session
+$ sudo yum install -y pinentry-gtk.x86_64
+```
 
 You can also use **Seahorse** – a GNOME application for managing encryption keys:
 
-    yum install -y seahorse
+```sh-session
+$ sudo yum install -y seahorse
+```
 
 The application can be found in *Applications > Accessories menu*.

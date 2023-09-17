@@ -12,7 +12,7 @@ I was recently reading an article online about some methods to hide password arg
 
 I've created a simple [Python script](#programpy "program.py") that accepts a single argument for password, let's run it:
 
-```
+```sh-session
 $ ./program.py -p secret123 &
 [1] 18200
 Sleeping for 600s. PID: 18200
@@ -20,7 +20,7 @@ Sleeping for 600s. PID: 18200
 
 Now, we check the output from "ps":
 
-```
+```sh-session
 $ ps -lfp 18200
 F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
 0 S root     18200 16045  0  80   0 - 32500 poll_s 12:26 pts/2    00:00:00 python3 ./program.py -p secret123
@@ -28,7 +28,7 @@ F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
 
 Hmm, that's not good, any user on the system can ready our password now but if we check the help menu for our program, it looks like it can accept password either from the argument or environment variable:
 
-```
+```sh-session
 $ ./program.py --help
 usage: program.py [-h] [-p PASSWORD]
 
@@ -42,13 +42,13 @@ optional arguments:
 
 Assuming we can't modify the original script, let's use [a wrapper script](#wrappersh "wrapper.sh") that will store the password in environmental variable:
 
-```bash
+```sh-session
 $ ./wrapper.sh
 Enter your secret:
 Sleeping for 600s. PID: 18639
 ```
 
-```bash
+```sh-session
 $ ps -lfp 18639
 F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
 0 S root     18639 18640  0  80   0 - 32500 poll_s 12:42 pts/2    00:00:00 python3 ./program.py
@@ -58,7 +58,7 @@ Cool, the password argument is no longer listed however we can still read enviro
 
 Here is how, the `/proc/<pid>/maps` file contains the ranges of memory mapped to the process and what they are mapped to. Near the bottom there is a line with the range mapped to `[stack]`. Take a note of the start address (they are in hex notation) and calculate the size in bytes:
 
-```
+```sh-session
 $ sudo cat /proc/18639/maps | grep "\[stack\]"
 7fff5f1a1000-7fff5f1c2000 rw-p 00000000 00:00 0                          [stack]
 
@@ -68,7 +68,7 @@ $ python -c 'print(hex(int("7fff5f1c2000", 16) - int("7fff5f1a1000", 16)))'
 
 Then run the command below to read the memory content. The environment variables should be printed out together with their hex values and address location, including our `PASSWORD=secret123` variable:
 
-```
+```sh-session
 $ sudo xxd -s 0x7fff5f1a1000 -l 0x21000 /proc/18639/mem | grep -A 1 "PASSWORD"
 7fff5f1c13a00 5041 5353 574f 5244 3d73 6563 7265  :.PASSWORD=secre
 7fff5f1c17431 3233 0053 5348 5f41 5554 485f 534f  t123.SSH_AUTH_SO

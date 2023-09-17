@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
 The code was working fine when I removed the _commit_ statement otherwise it was throwing the following exception:
 
-```
+```sh-session
 $ python test.py
 (u'a',)
 Traceback (most recent call last):
@@ -87,19 +87,19 @@ sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
 
 We'll install `Python 2.7.9` using `pyenv`:
 
-```
+```sh-session
 $ pyenv install -f -k -v -g -p 2.7.9
 ```
 
 The SQLite module is written in `C` so we'll use `gdb` (GNU Debugger) for debugging. We'll also need to install debugging symbols for Python and SQLite:
 
-```
+```sh-session
 $ sudo yum install python-debuginfo http://debuginfo.centos.org/7/x86_64/glibc-debuginfo-2.17-307.el7.1.x86_64.rpm http://debuginfo.centos.org/7/x86_64/sqlite-debuginfo-3.7.17-8.el7_7.1.x86_64.rpm
 ```
 
 I had to pull some pkgs directly from the `debuginfo` repo because my system was using `glibc-2.17-307.el7.1` and `sqlite-3.7.17-8.el7_7.1` but the equivalent `debuginfo` pkgs were not available:
 
-```
+```sh-session
 $ sudo yum -q list --showduplicates --enablerepo=base-debuginfo glibc-debuginfo sqlite-debuginfo
 Installed Packages
 glibc-debuginfo.x86_64                                                              2.17-307.el7.1                                                                @/glibc-debuginfo-2.17-307.el7.1.x86_64   
@@ -121,15 +121,15 @@ add-auto-load-safe-path ~/.pyenv/versions/2.7.9-debug/bin/python2.7-gdb.py
 
 It's time for some debugging, the `-k` flag instructs `pyenv` to keep the source tree, let's find the relevant error message from the exception:
 
-```
-grep -R "Error binding parameter" ~/.pyenv/sources/2.7.9-debug/Python-2.7.9/Modules/_sqlite/
+```sh-session
+$ grep -R "Error binding parameter" ~/.pyenv/sources/2.7.9-debug/Python-2.7.9/Modules/_sqlite/
 /home/test/.pyenv/sources/2.7.9-debug/Python-2.7.9/Modules/_sqlite/statement.c:                    PyErr_Format(pysqlite_InterfaceError, "Error binding parameter %d - probably unsupported type.", i);
 /home/test/.pyenv/sources/2.7.9-debug/Python-2.7.9/Modules/_sqlite/statement.c:                    PyErr_Format(pysqlite_InterfaceError, "Error binding parameter :%s - probably unsupported type.", binding_name);
 ```
 
 So after we checked `statement.c` file, it looks like both errors are located in `pysqlite_statement_bind_parameters` function that has the following signature:
 
-```
+```c
 void pysqlite_statement_bind_parameters(pysqlite_Statement* self, PyObject* parameters, int allow_8bit_chars)
 ```
 
@@ -137,7 +137,7 @@ Let's start `gdb` session and create a `breakpoint` to pause the execution at th
 
 We also know that "everything is an [object](https://docs.python.org/3/c-api/structures.html) in Python" so we need to use some `C` functions from the [Python/C API](https://docs.python.org/3/c-api/index.html) :
 
-```
+```sh-session
 break pysqlite_statement_bind_parameters if PyTuple_Size(parameters) == 1 && $_streq(PyString_AsString(PyTuple_GetItem(parameters, 0)), "b")
 ```
 
@@ -153,7 +153,7 @@ True
 
 #### GDB session:
 
-```
+```sh-session
 $ gdb -q ~/.pyenv/versions/2.7.9-debug/bin/python
 Reading symbols from /home/test/.pyenv/versions/2.7.9-debug/bin/python2.7...done.
 (gdb) break pysqlite_statement_bind_parameters if PyTuple_Size(parameters) == 1 && $_streq(PyString_AsString(PyTuple_GetItem(parameters, 0)), "b")
@@ -165,7 +165,7 @@ Breakpoint 1 (pysqlite_statement_bind_parameters if PyTuple_Size(parameters) == 
 
 We've set the breakpoint so it's time to start our script:
 
-```
+```sh-session
 (gdb) run test.py
 Starting program: /home/test/.pyenv/versions/2.7.9-debug/bin/python test.py
 [Thread debugging using libthread_db enabled]
@@ -178,7 +178,7 @@ Breakpoint 1, pysqlite_statement_bind_parameters (self=0x7fffef7be2b0, parameter
 
 We've hit our breakpoint so we can take a look around:
 
-```
+```sh-session
 (gdb) whatis self
 type = pysqlite_Statement *
 (gdb) ptype self
@@ -201,7 +201,7 @@ The `self` argument is a `pysqlite_Statement *` structure and the `sql` member i
 
 Let's hit `next` (a few times) to proceed to the next line. We use a `tuple`  as a parameter so we go into this branch in the `if` statement and finally we see some interesting variable: 
 
-```
+```sh-session
 (gdb) n
 227	    num_params_needed = sqlite3_bind_parameter_count(self->st);
 (gdb) 
@@ -236,7 +236,7 @@ PyObject* pysqlite_connection_commit(pysqlite_Connection* self, PyObject* args)
 
 We disable our first breakpoint, set a new one and re-start our script:
 
-```
+```sh-session
 (gdb) disable 1
 (gdb) break pysqlite_connection_commit
 Breakpoint 2 at 0x7fffefabc76a: file /home/test/.pyenv/sources/2.7.9-debug/Python-2.7.9/Modules/_sqlite/connection.c, line 457.
@@ -263,7 +263,7 @@ We're not in transaction and there are no statements so that must be our call to
 
 Let's continue until we hit our breakpoint again. This time we're in transaction and we can see our statements. We also use again some Python `Python/C API` functions to get the data we want:
 
-```
+```sh-session
 (gdb) cont
 Continuing.
 
@@ -294,7 +294,7 @@ $9 = 'SELECT char FROM t1 WHERE char = ?'
 
 After that we see another function call `pysqlite_do_all_statements` that apparently is trying to "reset" our statements, let's step into that function to take a look:
 
-```
+```sh-session
 (gdb) n
 462	        pysqlite_do_all_statements(self, ACTION_RESET, 0);
 (gdb) s
@@ -318,7 +318,7 @@ $25 = 'INSERT INTO t1 VALUES (?)'
 
 So it looks like it loops over our statements and use the same `Python/C API` functions like we did to read them. The first one is our _insert_ so we can skip this iteration of the loop with `until`: 
 
-```
+```sh-session
 (gdb) u
 245	    for (i = 0; i < PyList_Size(self->statements); i++) {
 (gdb) n
@@ -337,7 +337,7 @@ $26 = 'SELECT char FROM t1 WHERE char = ?'
 
 Here is our _select_ query, this time we'll step into the `pysqlite_statement_reset` function call:
 
-```
+```sh-session
 (gdb) s
 pysqlite_statement_reset (self=0x7fffef7be2b0) at /home/test/.pyenv/sources/2.7.9-debug/Python-2.7.9/Modules/_sqlite/statement.c:392
 392	    rc = SQLITE_OK;
@@ -375,7 +375,7 @@ We can see that the life-cycle of a [prepared statement](https://sqlite.org/c3re
 
 Let's test quickly what will happen if we skip this step:
 
-```
+```sh-session
 (gdb) del
 Delete all breakpoints? (y or n) y
 (gdb) break pysqlite_connection_commit
@@ -416,7 +416,7 @@ At this point I've decided to check for any changes around that part of the code
 
 The patch below can be easily applied with `pyenv`:
 
-```
+```sh-session
 $ cat ~/issue10513.patch 
 --- Modules/_sqlite/connection.c	2014-12-10 15:59:53.000000000 +0000
 +++ connection.c	2020-05-15 14:23:36.232892608 +0100
@@ -440,7 +440,7 @@ Hunk #1 succeeded at 458 (offset -1 lines).
 ...
 ```
 
-```
+```sh-session
 $ pyenv local 2.7.9-debug
 $ python --version
 Python 2.7.9

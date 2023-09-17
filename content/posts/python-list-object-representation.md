@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
 So, in the example above we read directly from the underlying `PyObject` objects:
 
-```
+```sh-session
 $ python test.py
 red length: 3 hash: -2831683529608114332 (-2831683529608114332)
 blue length: 4 hash: -1701992703184244183 (-1701992703184244183)

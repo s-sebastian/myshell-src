@@ -26,7 +26,7 @@ settings = {
        statusInterval = 1 
 }
 
-    sync{
+    sync {
 
        default.rsyncssh,
 
@@ -44,7 +44,9 @@ settings = {
 
 Don’t forget to add execute permission:
 
-    # chmod 755 /etc/init.d/lsyncd
+```sh-session
+# chmod 755 /etc/init.d/lsyncd
+```
 
 ```bash
 #!/bin/bash

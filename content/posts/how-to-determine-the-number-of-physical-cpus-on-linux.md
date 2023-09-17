@@ -10,21 +10,21 @@ The **/proc/cpuinfo** file contains information about the CPUs installed on your
 
 #### - list number of physical CPUs:
 
-```
+```sh-session
 $ cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l
 1
 ```
 
 #### - number of cores:
 
-```
+```sh-session
 $ cat /proc/cpuinfo | grep "cpu cores" | uniq
 cpu cores    : 2
 ```
 
 #### - how many virtual processors:
 
-```
+```sh-session
 $ cat /proc/cpuinfo | grep "^processor"
 processor    : 0
 processor    : 1

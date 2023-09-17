@@ -64,7 +64,7 @@ typedef struct {
 
 We'll open a `gdb` (GNU Debugger) session to check this (please refer to my previous [blog post](/blog/2020/05/python-the-old-bug-in-sqlite-module-strikes-back/) for configuration details) and set a breakpoint on the built-in `print` function (`builtin_print`) that is defined in [cpython/Python/bltinmodule.c](https://github.com/python/cpython/blob/master/Python/bltinmodule.c):
 
-```
+```sh-session
 $ gdb -q ~/.pyenv/versions/3.8.0-debug/bin/python
 Reading symbols from /home/test/.pyenv/versions/3.8.0-debug/bin/python3.8...done.
 (gdb) b builtin_print
@@ -73,7 +73,7 @@ Breakpoint 1 at 0x67efb0: file Python/bltinmodule.c, line 1825.
 
 We then just print our single character string:
 
-```
+```sh-session
 (gdb) run -c 'print("A")'
 Starting program: /home/test/.pyenv/versions/3.8.0-debug/bin/python -c 'print("A")'
 [Thread debugging using libthread_db enabled]
@@ -85,7 +85,7 @@ Breakpoint 1, builtin_print (self=<module at remote 0x7ffff7f84d70>, args=0xa6ec
 
 The `args` parameter holds all arguments that were supplied to the `print` function. We'll cast the first one into `PyASCIIObject`:
 
-```
+```sh-session
 (gdb) set print pretty on
 (gdb) p args[0]
 $3 = 'A'
@@ -118,7 +118,7 @@ We can also find the string itself, according to PEP 393, our string should be l
 
 > Objects for which both size and maximum character are known at creation time are called "compact" unicode objects; character data immediately follow the base structure.
 
-```
+```sh-session
 (gdb) x/1sb (unsigned long) *args + 48
 0x7ffff7e86bb0:	"A"
 (gdb) x/2cb (unsigned long) *args + 48
@@ -176,7 +176,7 @@ PEP 393 mentions that "for non-ASCII strings, the `PyCompactObject` structure is
 
 So let's go back to the `gdb` session to see this in action:
 
-```
+```sh-session
 (gdb) run -c 'print("🐙")'
 The program being debugged has been started already.
 Start it from the beginning? (y or n) y
@@ -214,7 +214,7 @@ $22 = 72
 
 The size of the object structure is 72 bytes now and we can see that each code point is using 4 bytes:
 
-```
+```sh-session
 (gdb) x/1sw (unsigned long) *args + 72
 0x7ffff7e19808:	U"\x1f419"
 (gdb) x/8xb (unsigned long) *args + 72
