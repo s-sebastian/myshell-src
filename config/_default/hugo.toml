@@ -74,3 +74,6 @@ disqusShortname = "myshell"
   replacements = "github.com/s-sebastian/hugo-theme-terminal -> terminal"
 [[module.imports]]
   path = "github.com/s-sebastian/hugo-theme-terminal"
+
+[imaging]
+  quality = 100
