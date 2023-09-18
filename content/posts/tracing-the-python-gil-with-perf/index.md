@@ -120,7 +120,7 @@ $ vizviewer report.json
 
 From this visualization, it's evident that the GIL prevents threads from running in parallel, as indicated by the threads regularly entering a sleeping state, denoted by the `S(GIL)` trace events:
 
-![Screenshot1](img/screenshot1.png "Screenshot1")
+![Screenshot1](img/screenshot1.png)
 
 When we modify the thread worker function to make an HTTP request, it becomes clear that while one thread is blocked (waiting on the GIL), the other thread is occupied with parsing the response and extracting cookies. Due to the Python GIL, even these tasks can prevent other threads from executing concurrently, leading to potential bottlenecks in multi-threaded applications:
 
