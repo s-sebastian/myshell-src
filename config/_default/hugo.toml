@@ -68,7 +68,6 @@ disqusShortname = "myshell"
         identifier = "resume"
         name = "Résumé"
         url = "https://sebastiansobczynski.com"
-        pre = '<i class="fa-file"></i>'
 
 [module]
   replacements = "github.com/s-sebastian/hugo-theme-terminal -> terminal"
