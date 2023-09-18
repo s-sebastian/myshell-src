@@ -1,0 +1,6 @@
+{{ with .Page.Resources.Get .Destination }}
+  {{ $img := .Resize (printf "%dx%d webp" .Width .Height) }}
+  {{ with $img }}
+    <img src="{{ .RelPermalink }}" alt="{{ $.Text }}" {{ with $.Title }} title="{{ . | plainify }}"{{ end }} loading="lazy" decoding="async"/>
+  {{ end }}
+{{ end }}
