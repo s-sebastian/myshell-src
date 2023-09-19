@@ -1,5 +1,7 @@
 +++
 title = "About"
+readingTime = false
+hideComments = true
 +++
 
 Welcome to my `$SHELL`!
