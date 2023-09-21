@@ -416,7 +416,7 @@ At this point I've decided to check for any changes around that part of the code
 
 The patch below can be easily applied with `pyenv`:
 
-```sh-session
+```diff
 $ cat ~/issue10513.patch 
 --- Modules/_sqlite/connection.c	2014-12-10 15:59:53.000000000 +0000
 +++ connection.c	2020-05-15 14:23:36.232892608 +0100
